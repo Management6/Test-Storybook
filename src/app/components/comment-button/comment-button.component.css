@@ -1,0 +1,14 @@
+.comment-button {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    color: black;
+    transition: transform 01.s ease;
+}
+
+.comment-button:hover {
+    transform: scale(1.1);
+}

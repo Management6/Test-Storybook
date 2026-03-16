@@ -1,0 +1,28 @@
+.like-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: Arial, sans-serif;
+}
+
+.like-button {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    color: black;
+}
+
+.like-button:hover {
+    transform: scale(1.1);
+}
+
+.like-count {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.like-button.liked {
+    color: red;
+}
