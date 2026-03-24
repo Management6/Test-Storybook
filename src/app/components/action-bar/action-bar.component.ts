@@ -1,4 +1,4 @@
-import {Component, Input, EventEmitter, Output, output} from '@angular/core';
+import {Component, Input, EventEmitter, Output} from '@angular/core';
 import { LikeButtonComponent } from '../like-button/like-button.component';
 import { CommentButtonComponent } from '../comment-button/comment-button.component';
 import { ShareButtonComponent } from '../share-button/share-button.component';
@@ -13,14 +13,18 @@ import { ShareButtonComponent } from '../share-button/share-button.component';
 export class ActionBarComponent {
   @Input() liked = false;
   @Output() likedChange = new EventEmitter<boolean>();
+  @Output() commentClicked = new EventEmitter<void>();
+  @Output() shareClicked = new EventEmitter<void>();
 
-  onLikeChange(newValue: boolean) {
+  onLikeChange(newValue: boolean): void {
     this.likedChange.emit(newValue);
   }
 
-  @Output() commentClicked = new EventEmitter<void>();
-  onCommentClick(event: Event) : void {
-    event.stopPropagation(); // Prevents parent click issues
+  onCommentClick(): void {
     this.commentClicked.emit();
+  }
+
+  onShareClick(): void {
+    this.shareClicked.emit();
   }
 }

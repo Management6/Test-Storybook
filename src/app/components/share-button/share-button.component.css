@@ -1,12 +1,21 @@
 .share-button {
     background: none;
     border: none;
-    font-size: 22px;
     cursor: pointer;
     padding: 0;
     line-height: 1;
     color: black;
     transition: transform 0.1s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+}
+
+.share-icon {
+    font-size: 26px;
+    line-height: 1;
 }
 
 .share-button:hover {

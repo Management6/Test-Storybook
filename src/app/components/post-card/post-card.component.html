@@ -35,6 +35,7 @@
         [liked]="liked"
         (likedChange)="onLikedChange($event)"
         (commentClicked)="openComments()"
+        (shareClicked)="openShare()"
       ></app-action-bar>
 
       <p class="post-likes">
@@ -90,6 +91,77 @@
           ></app-like-button>
         </div>
       </div>
+    </div>
+  </div>
+  <div
+    class="comments-overlay"
+    *ngIf="isShareOpen"
+    (click)="closeShare()"
+  ></div>
+
+  <div
+    class="comments-sheet share-sheet"
+    *ngIf="isShareOpen"
+    (click)="$event.stopPropagation()"
+  >
+    <div class="comments-handle"></div>
+
+    <div class="comments-header">
+      <span>Share</span>
+    </div>
+
+    <div class="share-search">
+      <input
+        type="text"
+        class="share-search-input"
+        placeholder="Search"
+        [value]="shareSearch"
+        (input)="onShareSearch($event)"
+      />
+      <button
+        type="button"
+        class="share-search-button"
+        aria-label="Search recipients"
+      >
+        Search
+      </button>
+    </div>
+
+    <div class="share-recipient-list">
+      <div class="share-recipient" *ngFor="let recipient of filteredShareRecipients">
+        <img
+          class="comment-profile-image"
+          [src]="recipient.profileImage"
+          [alt]="recipient.username + ' profile picture'"
+        />
+
+        <div class="comment-body">
+          <div class="share-recipient-name">{{ recipient.username }}</div>
+          <div class="share-recipient-meta">{{ recipient.fullName }}</div>
+        </div>
+
+        <button
+          type="button"
+          class="share-send-button"
+        >
+          Send
+        </button>
+      </div>
+
+      <p class="share-empty-state" *ngIf="filteredShareRecipients.length === 0">
+        No people found.
+      </p>
+    </div>
+
+    <div class="share-options-row">
+      <button
+        type="button"
+        class="share-option-card"
+        *ngFor="let option of shareOptions"
+      >
+        <span class="share-option-icon">{{ option.icon }}</span>
+        <span class="share-option-label">{{ option.label }}</span>
+      </button>
     </div>
   </div>
 </div>

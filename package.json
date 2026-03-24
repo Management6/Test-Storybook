@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "storybook": "ng run angular-latest:storybook",
-    "build-storybook": "ng run angular-latest:build-storybook"
+    "build-storybook": "ng run angular-latest:build-storybook",
+    "chromatic": "npx chromatic --project-token=chpt_8d7b58fbd47dae8"
   },
   "private": true,
   "packageManager": "npm@11.9.0",
@@ -22,20 +23,23 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@angular-devkit/architect": "^0.2102.0",
+    "@angular-devkit/build-angular": "^21.2.0",
+    "@angular-devkit/core": "^21.2.0",
     "@angular/build": "^21.2.2",
     "@angular/cli": "^21.2.2",
     "@angular/compiler-cli": "^21.2.0",
-    "prettier": "^3.8.1",
-    "typescript": "~5.9.2",
-    "storybook": "^10.2.19",
-    "@storybook/angular": "^10.2.19",
+    "@angular/platform-browser-dynamic": "^21.2.0",
+    "@chromatic-com/storybook": "^5.0.2",
+    "@compodoc/compodoc": "^1.2.1",
     "@storybook/addon-a11y": "^10.2.19",
     "@storybook/addon-docs": "^10.2.19",
     "@storybook/addon-onboarding": "^10.2.19",
-    "@angular-devkit/build-angular": "^21.2.0",
-    "@angular-devkit/architect": "^0.2102.0",
-    "@angular-devkit/core": "^21.2.0",
-    "@angular/platform-browser-dynamic": "^21.2.0",
-    "@compodoc/compodoc": "^1.2.1"
+    "@storybook/addon-vitest": "^10.3.3",
+    "@storybook/angular": "^10.2.19",
+    "chromatic": "^16.0.0",
+    "prettier": "^3.8.1",
+    "storybook": "^10.2.19",
+    "typescript": "~5.9.2"
   }
 }

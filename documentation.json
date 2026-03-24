@@ -35,7 +35,7 @@
     "components": [
         {
             "name": "ActionBarComponent",
-            "id": "component-ActionBarComponent-4996e3abe74973ed0ebab1615f82c4aa2515a09e6e2475a537840a3d2afab69b90027ea55fc3589d9c95aba6f4bf5f9b6b0e42b6b555075ea81419ab51d50ee8",
+            "id": "component-ActionBarComponent-c1d727511bbe223b540c188beaa4475f70dc8899f110915a09d80e599d15ce55b38225366af83ca7e1eb870e8438d9f786413979925c5d26aaca8d5cbbc6c602",
             "file": "src/app/components/action-bar/action-bar.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -54,18 +54,96 @@
             "hostDirectives": [],
             "inputsClass": [
                 {
-                    "name": "likes",
-                    "defaultValue": "0",
+                    "name": "liked",
+                    "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "line": 14,
-                    "type": "number",
+                    "type": "boolean",
                     "decorators": []
                 }
             ],
-            "outputsClass": [],
+            "outputsClass": [
+                {
+                    "name": "commentClicked",
+                    "defaultValue": "new EventEmitter<void>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 16,
+                    "type": "EventEmitter"
+                },
+                {
+                    "name": "likedChange",
+                    "defaultValue": "new EventEmitter<boolean>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 15,
+                    "type": "EventEmitter"
+                },
+                {
+                    "name": "shareClicked",
+                    "defaultValue": "new EventEmitter<void>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 17,
+                    "type": "EventEmitter"
+                }
+            ],
             "propertiesClass": [],
-            "methodsClass": [],
+            "methodsClass": [
+                {
+                    "name": "onCommentClick",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 23,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onLikeChange",
+                    "args": [
+                        {
+                            "name": "newValue",
+                            "type": "boolean",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 19,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "newValue",
+                            "type": "boolean",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "onShareClick",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 27,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
             "deprecated": false,
             "deprecationMessage": "",
             "hostBindings": [],
@@ -88,7 +166,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {Component, Input} from '@angular/core';\nimport { LikeButtonComponent } from '../like-button/like-button.component';\nimport { CommentButtonComponent } from '../comment-button/comment-button.component';\nimport { ShareButtonComponent } from '../share-button/share-button.component';\n\n@Component({\n  selector: 'app-action-bar',\n  standalone: true,\n  imports: [LikeButtonComponent, CommentButtonComponent, ShareButtonComponent],\n  templateUrl: './action-bar.component.html',\n  styleUrls: ['./action-bar.component.css']\n})\nexport class ActionBarComponent {\n  @Input() likes: number = 0;\n}",
+            "sourceCode": "import {Component, Input, EventEmitter, Output} from '@angular/core';\nimport { LikeButtonComponent } from '../like-button/like-button.component';\nimport { CommentButtonComponent } from '../comment-button/comment-button.component';\nimport { ShareButtonComponent } from '../share-button/share-button.component';\n\n@Component({\n  selector: 'app-action-bar',\n  standalone: true,\n  imports: [LikeButtonComponent, CommentButtonComponent, ShareButtonComponent],\n  templateUrl: './action-bar.component.html',\n  styleUrls: ['./action-bar.component.css']\n})\nexport class ActionBarComponent {\n  @Input() liked = false;\n  @Output() likedChange = new EventEmitter<boolean>();\n  @Output() commentClicked = new EventEmitter<void>();\n  @Output() shareClicked = new EventEmitter<void>();\n\n  onLikeChange(newValue: boolean): void {\n    this.likedChange.emit(newValue);\n  }\n\n  onCommentClick(): void {\n    this.commentClicked.emit();\n  }\n\n  onShareClick(): void {\n    this.shareClicked.emit();\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -98,11 +176,11 @@
             ],
             "stylesData": "",
             "extends": [],
-            "templateData": "<div class=\"action-bar\">\n    <app-like-button [likes]=\"likes\"></app-like-button>\n    <app-comment-button></app-comment-button>\n    <app-share-button></app-share-button>\n</div>"
+            "templateData": "<div class=\"action-bar\">\n    <app-like-button [liked]=\"liked\" (likedChange)=\"onLikeChange($event)\"></app-like-button>\n    <app-comment-button (commentClicked)=\"onCommentClick()\"></app-comment-button>\n    <app-share-button (shareClicked)=\"onShareClick()\"></app-share-button>\n</div>\n"
         },
         {
             "name": "App",
-            "id": "component-App-2d29751a5ee04d472ea6ddb2e4b5fa9743327d30888051a7d13cd8a57270c720a6b712df782a2998a2319f4fd3e2c31b5b1c5e775b01498e65f345d51045e147",
+            "id": "component-App-568e762dbee6b030e650aee331e0b7207af722f2d214f65e64f5caa8a441a0ea2992162dacdbc8900bef52c693732ff73f64d54947c3ce45c1353c31199cd5f1",
             "file": "src/app/app.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -112,29 +190,13 @@
             "selector": "app-root",
             "styleUrls": [],
             "styles": [],
-            "template": "<h1>Hello, {{ title() }}</h1>\n\n<router-outlet />\n",
+            "template": "<app-post-card />\n",
             "templateUrl": [],
             "viewProviders": [],
             "hostDirectives": [],
             "inputsClass": [],
             "outputsClass": [],
-            "propertiesClass": [
-                {
-                    "name": "title",
-                    "defaultValue": "signal('angular-latest')",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "unknown",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 15,
-                    "modifierKind": [
-                        124,
-                        148
-                    ]
-                }
-            ],
+            "propertiesClass": [],
             "methodsClass": [],
             "deprecated": false,
             "deprecationMessage": "",
@@ -143,13 +205,14 @@
             "standalone": false,
             "imports": [
                 {
-                    "name": "RouterOutlet"
+                    "name": "PostCardComponent",
+                    "type": "component"
                 }
             ],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, signal } from '@angular/core';\nimport { RouterOutlet } from '@angular/router';\n\n@Component({\n  selector: 'app-root',\n  imports: [RouterOutlet],\n  template: `\n    <h1>Hello, {{ title() }}</h1>\n\n    <router-outlet />\n  `,\n  styles: [],\n})\nexport class App {\n  protected readonly title = signal('angular-latest');\n}\n",
+            "sourceCode": "import { Component } from '@angular/core';\nimport { PostCardComponent } from './components/post-card/post-card.component';\n\n@Component({\n  selector: 'app-root',\n  imports: [PostCardComponent],\n  template: `\n    <app-post-card />\n  `,\n  styles: [],\n})\nexport class App {}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -441,7 +504,7 @@
         },
         {
             "name": "LikeButtonComponent",
-            "id": "component-LikeButtonComponent-245573d231933d4264f07a975852012c6e3a5d3eca24aea3cb380ece5ccf540b34beb3967866c0bd50d8f2005edeecef2a1df4bddefc75f5ac624f41dc38f905",
+            "id": "component-LikeButtonComponent-f128d658de14e47ceaeab4c77e6a379f9da330e36dcaaaba5fc304af8b03e4ef460f7ac2e6e34438f6eff95da3ed4b856f66e9e5da5607ffa08ad43ccf927f3f",
             "file": "src/app/components/like-button/like-button.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -460,29 +523,26 @@
             "hostDirectives": [],
             "inputsClass": [
                 {
-                    "name": "likes",
-                    "defaultValue": "0",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "line": 10,
-                    "type": "number",
-                    "decorators": []
-                }
-            ],
-            "outputsClass": [],
-            "propertiesClass": [
-                {
                     "name": "liked",
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "unknown",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 11
+                    "line": 10,
+                    "type": "boolean",
+                    "decorators": []
                 }
             ],
+            "outputsClass": [
+                {
+                    "name": "likedChange",
+                    "defaultValue": "new EventEmitter<boolean>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 11,
+                    "type": "EventEmitter"
+                }
+            ],
+            "propertiesClass": [],
             "methodsClass": [
                 {
                     "name": "toggleLike",
@@ -490,7 +550,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 12,
+                    "line": 13,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -504,17 +564,17 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input } from \"@angular/core\";\n\n@Component({\n    selector: 'app-like-button',\n    standalone: true,\n    templateUrl: './like-button.component.html',\n    styleUrls: ['./like-button.component.css']\n})\nexport class LikeButtonComponent {\n    @Input() likes = 0;\n    liked = false;\n    toggleLike() {\n        this.liked = !this.liked;\n        if (this.liked) {\n            this.likes++;\n        } else {\n            this.likes--;\n        }\n    }\n}",
+            "sourceCode": "import { Component, Input, EventEmitter, Output } from \"@angular/core\";\n\n@Component({\n    selector: 'app-like-button',\n    standalone: true,\n    templateUrl: './like-button.component.html',\n    styleUrls: ['./like-button.component.css']\n})\nexport class LikeButtonComponent {\n    @Input() liked = false;\n    @Output() likedChange = new EventEmitter<boolean>();\n\n    toggleLike() {\n        const newValue = !this.liked;\n        this.likedChange.emit(newValue);\n    }\n}",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".like-container {\n    display: flex;\n    align-items: center;\n    gap: 8px;\n    font-family: Arial, sans-serif;\n}\n\n.like-button {\n    background: none;\n    border: none;\n    font-size: 22px;\n    cursor: pointer;\n    transition: transform 0.1s ease;\n    color: black;\n}\n\n.like-button:hover {\n    transform: scale(1.1);\n}\n\n.like-count {\n    font-size: 14px;\n    font-weight: 500;\n}\n\n.like-button.liked {\n    color: red;\n}",
+                    "data": ".like-button {\n    background: none;\n    border: none;\n    font-size: 22px;\n    cursor: pointer;\n    padding: 0;\n    line-height: 1;\n    color: black;\n    transition: transform 0.1s ease;\n}\n\n.like-button:hover {\n    transform: scale(1.1);\n}",
                     "styleUrl": "./like-button.component.css"
                 }
             ],
             "stylesData": "",
             "extends": [],
-            "templateData": "<div class=\"like-container\">\n    <button (click)=\"toggleLike()\" class=\"like-button\" [attr.aria-label]=\"liked ? 'Unlike post' : 'Like post'\" [attr.aria-pressed]=\"liked\">\n        {{ liked ? '❤️' : '♡' }}\n    </button>\n    <span class=\"like-count\"> {{ likes }} likes</span>\n</div>"
+            "templateData": "<div class=\"like-container\">\n    <button \n        type=\"button\"\n        class=\"like-button\"\n        (click)=\"toggleLike()\"\n        [attr.aria-label]=\"liked ? 'Unlike post' : 'Like post'\"\n        [attr.aria-pressed]=\"liked\"\n        >\n        <span aria-hidden=\"true\">{{ liked ? '❤️' : '🤍' }}</span>\n    </button>\n</div>"
         },
         {
             "name": "PageComponent",
@@ -612,7 +672,7 @@
         },
         {
             "name": "PostCardComponent",
-            "id": "component-PostCardComponent-ce64077bb0a1d68f3a0ecddbd03dc0e6b12fa7b45531c04a109a1ac59d1add9980990c419dc580f34c37d1134c1c93c036335232f5d2c704fa937a8d7eef119b",
+            "id": "component-PostCardComponent-ae9fb86b07d08fec56d2aeb8222a9c7c0ad9d322c2dda8c020d45d53c1907725b17c73184f2950cd275fceeff396c51d447501344dbc9df6b47c236ac1ff89c2",
             "file": "src/app/components/post-card/post-card.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -635,7 +695,7 @@
                     "defaultValue": "'Building an Instagram clone with Angular and Storybook!'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 16,
+                    "line": 18,
                     "type": "string",
                     "decorators": []
                 },
@@ -644,7 +704,7 @@
                     "defaultValue": "24",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 15,
+                    "line": 17,
                     "type": "number",
                     "decorators": []
                 },
@@ -653,25 +713,25 @@
                     "defaultValue": "''",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 17,
+                    "line": 19,
                     "type": "string",
                     "decorators": []
                 },
                 {
                     "name": "postImage",
-                    "defaultValue": "'https://via.placeholder.com/500x500'",
+                    "defaultValue": "'./imgs/Post.jpg'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 14,
+                    "line": 16,
                     "type": "string",
                     "decorators": []
                 },
                 {
                     "name": "profileImage",
-                    "defaultValue": "'https://via.placeholder.com/40'",
+                    "defaultValue": "'./imgs/Profile-pic.jpg'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 13,
+                    "line": 15,
                     "type": "string",
                     "decorators": []
                 },
@@ -680,14 +740,197 @@
                     "defaultValue": "'lachlan_dev'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 12,
+                    "line": 14,
                     "type": "string",
                     "decorators": []
                 }
             ],
             "outputsClass": [],
-            "propertiesClass": [],
-            "methodsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "comments",
+                    "defaultValue": "[\n    {\n        username: 'Geordie',\n        text: 'Great post!',\n        profileImage: 'https://i.pravatar.cc/40?img=1',\n        liked: false\n      },\n    {\n        username: 'Harvey',\n        text: 'Love this!',\n        profileImage: 'https://i.pravatar.cc/40?img=2',\n        liked: false\n      },\n    {\n        username: 'Sam',\n        text: 'Amazing work!',\n        profileImage: 'https://i.pravatar.cc/40?img=3',\n        liked: false\n      },\n    {\n        username: 'Patrick',\n        text: \"Can't wait to see more!\",\n        profileImage: 'https://i.pravatar.cc/40?img=4',\n        liked: false\n      }\n    ]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "[]",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 21
+                },
+                {
+                    "name": "isCommentsOpen",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 20
+                },
+                {
+                    "name": "isShareOpen",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 69
+                },
+                {
+                    "name": "liked",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 59
+                },
+                {
+                    "name": "shareOptions",
+                    "defaultValue": "[\n        { label: 'Share to Story', icon: '📖' },\n        { label: 'Close Friends', icon: '⭐' },\n        { label: 'Copy Link', icon: '🔗' },\n        { label: 'WhatsApp', icon: '🟢' }\n    ]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "[]",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 71
+                },
+                {
+                    "name": "shareRecipients",
+                    "defaultValue": "[\n        {\n            username: 'alex.design',\n            fullName: 'Alex Parker',\n            profileImage: 'https://i.pravatar.cc/40?img=11'\n        },\n        {\n            username: 'maria.codes',\n            fullName: 'Maria Gomez',\n            profileImage: 'https://i.pravatar.cc/40?img=12'\n        },\n        {\n            username: 'sam.creates',\n            fullName: 'Sam Lee',\n            profileImage: 'https://i.pravatar.cc/40?img=13'\n        },\n        {\n            username: 'jess.studio',\n            fullName: 'Jessica Brown',\n            profileImage: 'https://i.pravatar.cc/40?img=14'\n        },\n        {\n            username: 'noah.visuals',\n            fullName: 'Noah Smith',\n            profileImage: 'https://i.pravatar.cc/40?img=15'\n        }\n    ]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "[]",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 77
+                },
+                {
+                    "name": "shareSearch",
+                    "defaultValue": "''",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 70
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "closeComments",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 51,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "closeShare",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 127,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onLikedChange",
+                    "args": [
+                        {
+                            "name": "newValue",
+                            "type": "boolean",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 60,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "newValue",
+                            "type": "boolean",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "onShareSearch",
+                    "args": [
+                        {
+                            "name": "event",
+                            "type": "Event",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 118,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "event",
+                            "type": "Event",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "openComments",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 47,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "openShare",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 123,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
             "deprecated": false,
             "deprecationMessage": "",
             "hostBindings": [],
@@ -697,22 +940,41 @@
                 {
                     "name": "ActionBarComponent",
                     "type": "component"
+                },
+                {
+                    "name": "CommonModule",
+                    "type": "module"
+                },
+                {
+                    "name": "LikeButtonComponent",
+                    "type": "component"
                 }
             ],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { ActionBarComponent } from '../action-bar/action-bar.component';\n\n@Component({\n    selector: 'app-post-card',\n    standalone: true,\n    imports: [ActionBarComponent],\n    templateUrl: './post-card.component.html',\n    styleUrls: ['./post-card.component.css']\n})\nexport class PostCardComponent {\n    @Input() username = 'lachlan_dev';\n    @Input() profileImage = 'https://via.placeholder.com/40';\n    @Input() postImage = 'https://via.placeholder.com/500x500';\n    @Input() likes = 24;\n    @Input() caption = 'Building an Instagram clone with Angular and Storybook!';\n    @Input() location = '';\n}",
+            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { ActionBarComponent } from '../action-bar/action-bar.component';\nimport { CommonModule } from '@angular/common';\nimport { LikeButtonComponent } from '../like-button/like-button.component';\n\n@Component({\n    selector: 'app-post-card',\n    standalone: true,\n    imports: [ActionBarComponent, CommonModule, LikeButtonComponent],\n    templateUrl: './post-card.component.html',\n    styleUrls: ['./post-card.component.css']\n})\nexport class PostCardComponent {\n    @Input() username = 'lachlan_dev';\n    @Input() profileImage = './imgs/Profile-pic.jpg';\n    @Input() postImage = './imgs/Post.jpg';\n    @Input() likes = 24;\n    @Input() caption = 'Building an Instagram clone with Angular and Storybook!';\n    @Input() location = '';\n    isCommentsOpen = false;\n    comments = [\n    {\n        username: 'Geordie',\n        text: 'Great post!',\n        profileImage: 'https://i.pravatar.cc/40?img=1',\n        liked: false\n      },\n    {\n        username: 'Harvey',\n        text: 'Love this!',\n        profileImage: 'https://i.pravatar.cc/40?img=2',\n        liked: false\n      },\n    {\n        username: 'Sam',\n        text: 'Amazing work!',\n        profileImage: 'https://i.pravatar.cc/40?img=3',\n        liked: false\n      },\n    {\n        username: 'Patrick',\n        text: \"Can't wait to see more!\",\n        profileImage: 'https://i.pravatar.cc/40?img=4',\n        liked: false\n      }\n    ];\n    openComments(): void {\n        this.isCommentsOpen = true;\n        this.isShareOpen = false; // Ensure share options are closed when opening comments\n    }\n    closeComments(): void {\n        this.isCommentsOpen = false;\n    }\n    //toggleComments(): void {\n    //    this.isCommentsOpen = !this.isCommentsOpen;\n    //}\n\n\n    liked = false;\n    onLikedChange(newValue: boolean) {\n        if (newValue && !this.liked) {\n            this.likes++;\n        } else if (!newValue && this.liked) {\n            this.likes--;\n        }\n        this.liked = newValue;\n    }\n\n    isShareOpen = false;\n    shareSearch = '';\n    shareOptions = [\n        { label: 'Share to Story', icon: '📖' },\n        { label: 'Close Friends', icon: '⭐' },\n        { label: 'Copy Link', icon: '🔗' },\n        { label: 'WhatsApp', icon: '🟢' }\n    ];\n    shareRecipients = [\n        {\n            username: 'alex.design',\n            fullName: 'Alex Parker',\n            profileImage: 'https://i.pravatar.cc/40?img=11'\n        },\n        {\n            username: 'maria.codes',\n            fullName: 'Maria Gomez',\n            profileImage: 'https://i.pravatar.cc/40?img=12'\n        },\n        {\n            username: 'sam.creates',\n            fullName: 'Sam Lee',\n            profileImage: 'https://i.pravatar.cc/40?img=13'\n        },\n        {\n            username: 'jess.studio',\n            fullName: 'Jessica Brown',\n            profileImage: 'https://i.pravatar.cc/40?img=14'\n        },\n        {\n            username: 'noah.visuals',\n            fullName: 'Noah Smith',\n            profileImage: 'https://i.pravatar.cc/40?img=15'\n        }\n    ];\n\n    get filteredShareRecipients() {\n        const search = this.shareSearch.trim().toLowerCase();\n\n        if (!search) {\n            return this.shareRecipients;\n        }\n\n        return this.shareRecipients.filter((recipient) =>\n            recipient.username.toLowerCase().includes(search) ||\n            recipient.fullName.toLowerCase().includes(search)\n        );\n    }\n\n    onShareSearch(event: Event): void {\n        const target = event.target as HTMLInputElement;\n        this.shareSearch = target.value;\n    }\n\n    openShare(): void {\n        this.isShareOpen = true;\n        this.isCommentsOpen = false; // Ensure comments are closed when sharing\n    }\n    closeShare(): void {\n        this.isShareOpen = false;\n        this.shareSearch = '';\n    }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".post-card {\n    width: 100%;\n    max-width: 470px;\n    background: white;\n    border: 1px solid #dbdbdb;\n    border-radius: 12px;\n    overflow: hidden;\n    font-family: Arial, sans-serif;\n}\n\n.post-header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    padding: 12px;\n}\n\n.post-user {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n}\n\n.profile-image {\n    width: 32px;\n    height: 32px;\n    border-radius: 50%;\n    object-fit: cover;\n}\n\n.post-user-info {\n    display: flex;\n    flex-direction: column;\n}\n\n.username {\n    font-weight: 600;\n    font-size: 12px;\n}\n\n.location {\n    font-size: 6px;\n    color: #666;\n}\n\n.menu-button {\n    background: none;\n    border: none;\n    font-size: 18px;\n    cursor: pointer;\n    color: black;\n}\n\n.post-image {\n    width: 100%;\n    display: block;\n    object-fit: cover;\n}\n\n.post-content {\n    padding: 12px;\n}\n\n.post-likes {\n    margin: 8px 0 6px;\n    font-size: 14px;\n}\n\n.post-caption {\n    margin: 0;\n    font-size: 14px;\n    line-height: 1.4;\n}",
+                    "data": ".post-card {\n    width: 100%;\n    max-width: 470px;\n    background: white;\n    border: 1px solid #dbdbdb;\n    border-radius: 12px;\n    overflow: hidden;\n    font-family: Arial, sans-serif;\n}\n\n.post-header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    padding: 12px;\n}\n\n.post-user {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n}\n\n.profile-image {\n    width: 32px;\n    height: 32px;\n    border-radius: 50%;\n    object-fit: cover;\n}\n\n.post-user-info {\n    display: flex;\n    flex-direction: column;\n}\n\n.username {\n    font-weight: 600;\n    font-size: 12px;\n}\n\n.location {\n    font-size: 6px;\n    color: #666;\n}\n\n.menu-button {\n    background: none;\n    border: none;\n    font-size: 18px;\n    cursor: pointer;\n    color: black;\n}\n\n.post-image {\n    width: 100%;\n    display: block;\n    object-fit: cover;\n}\n\n.post-content {\n    padding: 12px;\n}\n\n.post-likes {\n    margin: 8px 0 6px;\n    font-size: 14px;\n}\n\n.post-caption {\n    margin: 0;\n    font-size: 14px;\n    line-height: 1.4;\n}\n\n/* Comments Sheet Styles */\n.post-wrapper {\n    position: relative;\n}\n\n.comments-overlay {\n    position: fixed;\n    inset: 0;\n    background: rgba(0, 0, 0, 0.55);\n    z-index: 10;\n}\n\n.comments-sheet {\n    position: fixed;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    height: 50vh;\n    background: white;\n    border-top-left-radius: 18px;\n    border-top-right-radius: 18px;\n    z-index: 11;\n    display: flex;\n    flex-direction: column;\n    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);\n}\n\n.share-sheet {\n    height: 62vh;\n}\n\n.comments-handle {\n    width: 36px;\n    height: 4px;\n    background: #cfcfcf;\n    border-radius: 999px;\n    margin: 10px auto 8px;\n}\n\n.comments-header {\n    text-align: center;\n    font-weight: 600;\n    padding-bottom: 12px;\n    border-bottom: 1px solid #e5e5e5;\n}\n\n.comments-list {\n    flex: 1;\n    overflow-y: auto;\n    padding: 16px;\n}\n\n.comment {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    margin-bottom: 14px;\n}\n\n.comment-profile-image {\n    width: 32px;\n    height: 32px;\n    border-radius: 50%;\n    object-fit: cover;\n    flex-shrink: 0;\n}\n\n.comment-body {\n    flex: 1;\n}\n\n.comment-text {\n    font-size: 14px;\n    line-height: 1.4;\n}\n\n.comment-username {\n    margin-right: 6px;\n}\n\n.comment-like {\n    flex-shrink: 0;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    min-width: 24px;\n}\n\n.comment-like app-like-button {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    transform: scale(0.8);\n    transform-origin: center;\n}\n\n.comment strong {\n    margin-right: 6px;\n}\n\n.share-search {\n    display: flex;\n    gap: 10px;\n    padding: 14px 16px;\n    border-bottom: 1px solid #e5e5e5;\n}\n\n.share-search-input {\n    flex: 1;\n    border: 1px solid #dbdbdb;\n    border-radius: 10px;\n    padding: 10px 12px;\n    font-size: 14px;\n    outline: none;\n}\n\n.share-search-input:focus {\n    border-color: #a8a8a8;\n}\n\n.share-search-button {\n    border: none;\n    border-radius: 10px;\n    background: #0057b8;\n    color: #ffffff;\n    font-size: 13px;\n    font-weight: 600;\n    padding: 0 16px;\n    cursor: pointer;\n}\n\n.share-search-button:focus-visible {\n    outline: 2px solid #111;\n    outline-offset: 2px;\n}\n\n.share-recipient-list {\n    flex: 1;\n    overflow-y: auto;\n    padding: 8px 16px 16px;\n}\n\n.share-recipient {\n    display: flex;\n    align-items: center;\n    gap: 12px;\n    padding: 10px 0;\n}\n\n.share-recipient-name {\n    font-size: 14px;\n    font-weight: 600;\n    color: #111;\n}\n\n.share-recipient-meta {\n    font-size: 13px;\n    color: #737373;\n}\n\n.share-send-button {\n    border: none;\n    border-radius: 10px;\n    background: #efefef;\n    color: #111;\n    font-size: 13px;\n    font-weight: 600;\n    padding: 9px 16px;\n    cursor: pointer;\n}\n\n.share-empty-state {\n    margin: 24px 0 0;\n    text-align: center;\n    color: #737373;\n    font-size: 14px;\n}\n\n.share-options-row {\n    display: flex;\n    gap: 12px;\n    overflow-x: auto;\n    padding: 14px 16px 18px;\n    border-top: 1px solid #e5e5e5;\n}\n\n.share-option-card {\n    min-width: 88px;\n    border: none;\n    background: none;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    gap: 8px;\n    cursor: pointer;\n    padding: 0;\n}\n\n.share-option-icon {\n    width: 58px;\n    height: 58px;\n    border-radius: 50%;\n    background: #f3f3f3;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 24px;\n}\n\n.share-option-label {\n    text-align: center;\n    font-size: 12px;\n    line-height: 1.3;\n    color: #111;\n}\n",
                     "styleUrl": "./post-card.component.css"
                 }
             ],
             "stylesData": "",
             "extends": [],
-            "templateData": "<div class=\"post-card\">\n    <div class=\"post-header\">\n        <div class=\"post-user\">\n            <img\n                class=\"profile-image\"\n                [src]=\"profileImage\"\n                [alt]=\"username + ' profile picture'\"\n            />\n            <div class=\"post-user-info\">\n                <span class=\"username\">{{ username }}</span>\n                <span class=\"location\" *ngIf=\"location\">\n                    {{ location }}\n                </span>\n            </div>\n        </div>\n        <button\n            type=\"button\"\n            class=\"menu-button\"\n            aria-label=\"Post options\"\n            >...</button>\n        </div>\n        <img\n            class=\"post-image\"\n            [src]=\"postImage\"\n            [alt]=\"'Post by ' + username\"\n        />\n        <div class=\"post-content\">\n            <app-action-bar [likes]=\"likes\"></app-action-bar>\n            <p class=\"post-likes\">\n                <strong>{{ likes }} likes</strong>\n            </p>\n            <p class=\"post-caption\">\n                <strong>{{ username }}</strong> {{ caption }}\n            </p>\n        </div>            \n</div>"
+            "accessors": {
+                "filteredShareRecipients": {
+                    "name": "filteredShareRecipients",
+                    "getSignature": {
+                        "name": "filteredShareRecipients",
+                        "type": "",
+                        "returnType": "",
+                        "line": 105
+                    }
+                }
+            },
+            "templateData": "<div class=\"post-wrapper\">\n  <div class=\"post-card\">\n    <div class=\"post-header\">\n      <div class=\"post-user\">\n        <img\n          class=\"profile-image\"\n          [src]=\"profileImage\"\n          [alt]=\"username + ' profile picture'\"\n        />\n        <div class=\"post-user-info\">\n          <span class=\"username\">{{ username }}</span>\n          <span class=\"location\" *ngIf=\"location\">\n            {{ location }}\n          </span>\n        </div>\n      </div>\n\n      <button\n        type=\"button\"\n        class=\"menu-button\"\n        aria-label=\"Post options\"\n      >\n        ...\n      </button>\n    </div>\n\n    <img\n      class=\"post-image\"\n      [src]=\"postImage\"\n      [alt]=\"'Post by ' + username\"\n    />\n\n    <div class=\"post-content\">\n      <app-action-bar\n        [liked]=\"liked\"\n        (likedChange)=\"onLikedChange($event)\"\n        (commentClicked)=\"openComments()\"\n        (shareClicked)=\"openShare()\"\n      ></app-action-bar>\n\n      <p class=\"post-likes\">\n        <strong>{{ likes }} likes</strong>\n      </p>\n\n      <p class=\"post-caption\">\n        <strong>{{ username }}</strong> {{ caption }}\n      </p>\n    </div>\n  </div>\n\n  <!-- Dark overlay for comments -->\n  <div\n    class=\"comments-overlay\"\n    *ngIf=\"isCommentsOpen\"\n    (click)=\"closeComments()\"\n  ></div>\n\n  <!-- Comments sheet -->\n  <div\n    class=\"comments-sheet\"\n    *ngIf=\"isCommentsOpen\"\n    (click)=\"$event.stopPropagation()\"\n  >\n    <div class=\"comments-handle\"></div>\n\n    <div class=\"comments-header\">\n      <span>Comments</span>\n    </div>\n\n    <div class=\"comments-list\">\n      <div class=\"comment\" *ngFor=\"let comment of comments\">\n        <img\n          class=\"comment-profile-image\"\n          [src]=\"comment.profileImage\"\n          [alt]=\"comment.username + ' profile picture'\"\n        />\n\n        <div class=\"comment-body\">\n          <span class=\"comment-text\">\n            <strong class=\"comment-username\">\n              {{ comment.username }}\n            </strong>\n            {{ comment.text }}\n          </span>\n        </div>\n\n        <div class=\"comment-like\">\n          <app-like-button\n            [liked]=\"comment.liked\"\n            (likedChange)=\"comment.liked = $event\"\n          ></app-like-button>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div\n    class=\"comments-overlay\"\n    *ngIf=\"isShareOpen\"\n    (click)=\"closeShare()\"\n  ></div>\n\n  <div\n    class=\"comments-sheet share-sheet\"\n    *ngIf=\"isShareOpen\"\n    (click)=\"$event.stopPropagation()\"\n  >\n    <div class=\"comments-handle\"></div>\n\n    <div class=\"comments-header\">\n      <span>Share</span>\n    </div>\n\n    <div class=\"share-search\">\n      <input\n        type=\"text\"\n        class=\"share-search-input\"\n        placeholder=\"Search\"\n        [value]=\"shareSearch\"\n        (input)=\"onShareSearch($event)\"\n      />\n      <button\n        type=\"button\"\n        class=\"share-search-button\"\n        aria-label=\"Search recipients\"\n      >\n        Search\n      </button>\n    </div>\n\n    <div class=\"share-recipient-list\">\n      <div class=\"share-recipient\" *ngFor=\"let recipient of filteredShareRecipients\">\n        <img\n          class=\"comment-profile-image\"\n          [src]=\"recipient.profileImage\"\n          [alt]=\"recipient.username + ' profile picture'\"\n        />\n\n        <div class=\"comment-body\">\n          <div class=\"share-recipient-name\">{{ recipient.username }}</div>\n          <div class=\"share-recipient-meta\">{{ recipient.fullName }}</div>\n        </div>\n\n        <button\n          type=\"button\"\n          class=\"share-send-button\"\n        >\n          Send\n        </button>\n      </div>\n\n      <p class=\"share-empty-state\" *ngIf=\"filteredShareRecipients.length === 0\">\n        No people found.\n      </p>\n    </div>\n\n    <div class=\"share-options-row\">\n      <button\n        type=\"button\"\n        class=\"share-option-card\"\n        *ngFor=\"let option of shareOptions\"\n      >\n        <span class=\"share-option-icon\">{{ option.icon }}</span>\n        <span class=\"share-option-label\">{{ option.label }}</span>\n      </button>\n    </div>\n  </div>\n</div>\n"
         },
         {
             "name": "ShareButtonComponent",
@@ -770,13 +1032,13 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".share-button {\n    background: none;\n    border: none;\n    font-size: 22px;\n    cursor: pointer;\n    padding: 0;\n    line-height: 1;\n    color: black;\n    transition: transform 0.1s ease;\n}\n\n.share-button:hover {\n    transform: scale(1.1);\n}",
+                    "data": ".share-button {\n    background: none;\n    border: none;\n    cursor: pointer;\n    padding: 0;\n    line-height: 1;\n    color: black;\n    transition: transform 0.1s ease;\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    width: 22px;\n    height: 22px;\n}\n\n.share-icon {\n    font-size: 26px;\n    line-height: 1;\n}\n\n.share-button:hover {\n    transform: scale(1.1);\n}\n",
                     "styleUrl": "./share-button.component.css"
                 }
             ],
             "stylesData": "",
             "extends": [],
-            "templateData": "<button\n    type=\"button\"\n    class=\"share-button\"\n    (click)=\"onShareClick()\"\n    aria-label=\"Share post\"\n    >\n    <span aria-hidden=\"true\">✈</span>\n</button>"
+            "templateData": "<button\n    type=\"button\"\n    class=\"share-button\"\n    (click)=\"onShareClick()\"\n    aria-label=\"Share post\"\n    >\n    <span class=\"share-icon\" aria-hidden=\"true\">✈</span>\n</button>\n"
         }
     ],
     "modules": [],
@@ -871,7 +1133,7 @@
                 "linktype": "component",
                 "name": "App",
                 "coveragePercent": 0,
-                "coverageCount": "0/2",
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -880,7 +1142,7 @@
                 "linktype": "component",
                 "name": "ActionBarComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/2",
+                "coverageCount": "0/8",
                 "status": "low"
             },
             {
@@ -907,7 +1169,7 @@
                 "linktype": "component",
                 "name": "PostCardComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/7",
+                "coverageCount": "0/20",
                 "status": "low"
             },
             {

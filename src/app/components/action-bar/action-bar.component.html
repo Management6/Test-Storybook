@@ -1,5 +1,5 @@
 <div class="action-bar">
     <app-like-button [liked]="liked" (likedChange)="onLikeChange($event)"></app-like-button>
-    <app-comment-button (click)="onCommentClick($event)"></app-comment-button>
-    <app-share-button></app-share-button>
+    <app-comment-button (commentClicked)="onCommentClick()"></app-comment-button>
+    <app-share-button (shareClicked)="onShareClick()"></app-share-button>
 </div>
