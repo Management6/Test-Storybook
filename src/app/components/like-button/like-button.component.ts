@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, EventEmitter, Output } from "@angular/core";
 
 @Component({
     selector: 'app-like-button',
@@ -7,14 +7,11 @@ import { Component, Input } from "@angular/core";
     styleUrls: ['./like-button.component.css']
 })
 export class LikeButtonComponent {
-    @Input() likes = 0;
-    liked = false;
+    @Input() liked = false;
+    @Output() likedChange = new EventEmitter<boolean>();
+
     toggleLike() {
-        this.liked = !this.liked;
-        if (this.liked) {
-            this.likes++;
-        } else {
-            this.likes--;
-        }
+        const newValue = !this.liked;
+        this.likedChange.emit(newValue);
     }
 }

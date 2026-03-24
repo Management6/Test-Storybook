@@ -9,14 +9,16 @@ const meta: Meta<LikeButtonComponent> = {
 export default meta;
 type Story = StoryObj<LikeButtonComponent>;
 
-export const Default: Story = {
+export const Unliked: Story = {
     args: {
-        likes: 24,
+        liked: false,
+        likedChange: () => {}
     },
 };
 
-export const PopularPost: Story = {
+export const Liked: Story = {
     args: {
-        likes: 1056
+        liked: true,
+        likedChange: () => {}
     },
 };

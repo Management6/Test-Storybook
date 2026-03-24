@@ -1,36 +1,95 @@
-<div class="post-card">
+<div class="post-wrapper">
+  <div class="post-card">
     <div class="post-header">
-        <div class="post-user">
-            <img
-                class="profile-image"
-                [src]="profileImage"
-                [alt]="username + ' profile picture'"
-            />
-            <div class="post-user-info">
-                <span class="username">{{ username }}</span>
-                <span class="location" *ngIf="location">
-                    {{ location }}
-                </span>
-            </div>
-        </div>
-        <button
-            type="button"
-            class="menu-button"
-            aria-label="Post options"
-            >...</button>
-        </div>
+      <div class="post-user">
         <img
-            class="post-image"
-            [src]="postImage"
-            [alt]="'Post by ' + username"
+          class="profile-image"
+          [src]="profileImage"
+          [alt]="username + ' profile picture'"
         />
-        <div class="post-content">
-            <app-action-bar [likes]="likes"></app-action-bar>
-            <p class="post-likes">
-                <strong>{{ likes }} likes</strong>
-            </p>
-            <p class="post-caption">
-                <strong>{{ username }}</strong> {{ caption }}
-            </p>
-        </div>            
+        <div class="post-user-info">
+          <span class="username">{{ username }}</span>
+          <span class="location" *ngIf="location">
+            {{ location }}
+          </span>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        class="menu-button"
+        aria-label="Post options"
+      >
+        ...
+      </button>
+    </div>
+
+    <img
+      class="post-image"
+      [src]="postImage"
+      [alt]="'Post by ' + username"
+    />
+
+    <div class="post-content">
+      <app-action-bar
+        [liked]="liked"
+        (likedChange)="onLikedChange($event)"
+        (commentClicked)="openComments()"
+      ></app-action-bar>
+
+      <p class="post-likes">
+        <strong>{{ likes }} likes</strong>
+      </p>
+
+      <p class="post-caption">
+        <strong>{{ username }}</strong> {{ caption }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Dark overlay for comments -->
+  <div
+    class="comments-overlay"
+    *ngIf="isCommentsOpen"
+    (click)="closeComments()"
+  ></div>
+
+  <!-- Comments sheet -->
+  <div
+    class="comments-sheet"
+    *ngIf="isCommentsOpen"
+    (click)="$event.stopPropagation()"
+  >
+    <div class="comments-handle"></div>
+
+    <div class="comments-header">
+      <span>Comments</span>
+    </div>
+
+    <div class="comments-list">
+      <div class="comment" *ngFor="let comment of comments">
+        <img
+          class="comment-profile-image"
+          [src]="comment.profileImage"
+          [alt]="comment.username + ' profile picture'"
+        />
+
+        <div class="comment-body">
+          <span class="comment-text">
+            <strong class="comment-username">
+              {{ comment.username }}
+            </strong>
+            {{ comment.text }}
+          </span>
+        </div>
+
+        <div class="comment-like">
+          <app-like-button
+            [liked]="comment.liked"
+            (likedChange)="comment.liked = $event"
+          ></app-like-button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

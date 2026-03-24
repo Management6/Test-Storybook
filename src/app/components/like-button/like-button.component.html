@@ -1,6 +1,11 @@
 <div class="like-container">
-    <button (click)="toggleLike()" class="like-button" [attr.aria-label]="liked ? 'Unlike post' : 'Like post'" [attr.aria-pressed]="liked">
-        {{ liked ? '❤️' : '♡' }}
+    <button 
+        type="button"
+        class="like-button"
+        (click)="toggleLike()"
+        [attr.aria-label]="liked ? 'Unlike post' : 'Like post'"
+        [attr.aria-pressed]="liked"
+        >
+        <span aria-hidden="true">{{ liked ? '❤️' : '🤍' }}</span>
     </button>
-    <span class="like-count"> {{ likes }} likes</span>
 </div>

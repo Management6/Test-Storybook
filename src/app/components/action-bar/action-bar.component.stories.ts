@@ -11,12 +11,14 @@ type Story = StoryObj<ActionBarComponent>;
 
 export const Default: Story = {
   args: {
-    likes: 24,
+    liked: false,
+    likedChange: () => {},
   },
 };
 
 export const PopularPost: Story = {
   args: {
-    likes: 1532,
+    liked: true,
+    likedChange: () => {},
   },
 };
